@@ -26,7 +26,7 @@
 <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
 <h1 align="middle">Project 1: Rasterizer</h1>
 <h2 align="middle">Zhen Jiang, Victor Li (team: cs284a-victor)</h2>
-<h2 align="middle">Link: <a href="https://weiji-li.github.io/cs284a-write-up/proj1/index.html">https://weiji-li.github.io/cs284a-write-up/proj1/index.html</a></h2>
+
 <br><br>
 
 <div>
@@ -54,8 +54,8 @@ In this project, starting from simple rasterization to texture sampling, we impl
 <h3 align="middle">Part 2: Antialiasing triangles</h3>
 
 <p>The supersampling algorithm implements the supersampling procedure by using the sample buffer as its main data structure, which is already declared within the code. However, to enable the algorithm, we need to resize the sample buffer through multiplying the original size by the sample rate. The algorithm works as follows. Just like Task 1, it calculates the minimum and maximum x, y values from the three vertices and then traverses through each pixel within the constraint. For each pixel, it separates into smaller square regions based on the sample rate. For example, if the sample rate is 16, the pixel will separate into 4 x 4 square grid, with the total number of square regions being 16. The algorithm traverses through each region within the pixel, samples the point, and checks the point against the three lines tests. If the sample point passes the test, then the algorithm finds and colors the corresponding position in the sample buffer.</p>
-<p>The average down procedure is implemented in the function resolve_to_framebuffer. Basically, for each pixel in the frame buffer, we find the corresponding supersamples in the larger smaple buffer. We take average of the colors in those locations and then color the pixel in the frame buffer with the average r, g, b values.</p>
-<p>Besides rasterize_triangle and resolve_to_framebuffer, there are other modifications made to the rasterrization pipeline. In the functions set_sample_rate and set_framebuffer_target, we resize the sample buffer through multiplying the original size by the sample rate. In addition, in the function fill_pixel, the coloring of points & lines shall not be affected by supersampling. Thus, to take this into account, we create a a condition that, if the thing to fill pixel to is a point or a line (not a triangle), we will fill all the supersamples corresponding to the point or line with the same color.</p>
+<p>The average down procedure is implemented in the function resolve_to_framebuffer. Basically, for each pixel in the frame buffer, we find the corresponding supersamples in the larger sample buffer. We take average of the colors in those locations and then color the pixel in the frame buffer with the average r, g, b values.</p>
+<p>Besides rasterize_triangle and resolve_to_framebuffer, there are other modifications made to the rasterization pipeline. In the functions set_sample_rate and set_framebuffer_target, we resize the sample buffer through multiplying the original size by the sample rate. In addition, in the function fill_pixel, the coloring of points & lines shall not be affected by supersampling. Thus, to take this into account, we create a a condition that, if the thing to fill pixel to is a point or a line (not a triangle), we will fill all the supersamples corresponding to the point or line with the same color.</p>
 <p>Supersampling is useful because it can attenuate high signal frequencies and produce images with smoother edges, as you can see from the pictures shown below.</p>
 
 <div align="middle">
